@@ -21,7 +21,7 @@ local waitforindextorwriteeaaa = API.SystemTime()
 local redrinkprayerpotionsss = API.SystemTime()
 local hermoddiseappraerrr = API.SystemTime()
 local hermodverylongtimeee = API.SystemTime()
-local whendorunningway = math.random(100, 1750)
+local whendorunningway = math.random(150, 1650)
 local goonetimee = false
 local hermodwass = false
 local hermodwass2 = false
@@ -244,6 +244,7 @@ do------------------------------------------------------------------------------
                         local playerX, playerY = xkoordinate, ykoordinate
                         local newX, newY = getRandomCoordinate(playerX, playerY)
                         if(newX ~= nil) then
+                            whendorunningway = math.random(150, 1650)
                             API.DoAction_Tile(WPOINT.new(newX,newY,1 ))
                             writerunningandwaitstopandanimation()
                             API.RandomSleep2(100, 500, 1000)
