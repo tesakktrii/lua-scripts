@@ -22,6 +22,7 @@ local redrinkprayerpotionsss = API.SystemTime()
 local redrinkhealthpotionsss = API.SystemTime()
 local hermoddiseappraerrr = API.SystemTime()
 local hermodverylongtimeee = API.SystemTime()
+local hermodverylongtimeees = API.SystemTime()
 
 local whendorunningway = math.random(150, 1650)
 local goonetimee = false
@@ -32,7 +33,7 @@ local isPrestwasloaded = false
 local whendrinkprayer = math.random(70,160)
 
 local wheneatfood = math.random(1500,2500)
-
+local randomwwaitforteleportoutoldinstance = math.random(90000,120000)
 local checkiventnroyopenedd = 0
 local whenneedgotobank = false
 local therewasfoodnowno = false
@@ -336,55 +337,57 @@ do------------------------------------------------------------------------------
 
                 local distancefromkharen = calculateDistanceBetweenPoints(kkokiazaidejoxaazzz,kkokiazaidejoyaazzz,3294,10142)
 
-                if(distancefromkharen > 30) then -- Teleport to war retreat
-                    if( API.VB_FindPSettinOrder(3130, -1).state == 1) then
-                        API.DoAction_Interface(0xffffffff,0xffffffff,1,1461,1,205,API.OFF_ACT_GeneralInterface_route)
-                        API.RandomSleep2(6000, 1000, 1000)
-                    end
-                else
-                    API.RandomSleep2(1000, 2000, 3000)
-                    if(isPrestwasloaded == false) then
-                        API.DoAction_Object_r(0x33,API.OFF_ACT_GeneralObject_route3,{ 114750 },50,WPOINT.new(3299,10132,0),5) -- click load last preset...
-                        writerunningandwaitstopandanimation()
-                        API.RandomSleep2(1000, 1000, 1000)
-                        isPrestwasloaded = true
-                    else
-
-                        if(kkokiazaidejoyaazzz <= 10140) then
-                            local randomcoordinatetile = API.Math_RandomNumber(7)
-                            if(randomcoordinatetile == 1) then
-                                API.DoAction_Tile(WPOINT.new(3292,10143,0 ))
-                            elseif(randomcoordinatetile == 2) then
-                                API.DoAction_Tile(WPOINT.new(3292,10144,0 ))
-                            elseif(randomcoordinatetile == 3) then
-                                API.DoAction_Tile(WPOINT.new(3293,10145,0 ))
-                            elseif(randomcoordinatetile == 4) then
-                                API.DoAction_Tile(WPOINT.new(3294,10144,0 ))
-                            elseif(randomcoordinatetile == 5) then
-                                API.DoAction_Tile(WPOINT.new(3294,10143,0 ))
-                            elseif(randomcoordinatetile == 6) then
-                                API.DoAction_Tile(WPOINT.new(3295,10144,0 ))
-                            elseif(randomcoordinatetile == 7) then
-                                API.DoAction_Tile(WPOINT.new(3295,10145,0 ))
-                            else
-                                API.DoAction_Tile(WPOINT.new(3292,10143,0 ))
-                            end
-                            API.RandomSleep2(2500, 2500, 5000)
+                if(nearentrancetohermod == false) then
+                    if(distancefromkharen > 30) then -- Teleport to war retreat
+                        if( API.VB_FindPSettinOrder(3130, -1).state == 1) then
+                            API.DoAction_Interface(0xffffffff,0xffffffff,1,1461,1,205,API.OFF_ACT_GeneralInterface_route)
+                            API.RandomSleep2(6000, 1000, 1000)
                         end
+                    else
+                        API.RandomSleep2(1000, 2000, 3000)
+                        if(isPrestwasloaded == false) then
+                            API.DoAction_Object_r(0x33,API.OFF_ACT_GeneralObject_route3,{ 114750 },50,WPOINT.new(3299,10132,0),5) -- click load last preset...
+                            writerunningandwaitstopandanimation()
+                            API.RandomSleep2(1000, 1000, 1000)
+                            isPrestwasloaded = true
+                        else
 
-                        if(canenterportal == true) then
-                        
-                            API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127138 },50,WPOINT.new(3298,10154,0),5)
-                            writerunningandwaitstopandanimation()
-                            API.RandomSleep2(2000, 1000, 1000)
-                        elseif(needreaatuneportal == true) then
-                            API.DoAction_Object_r(0x29,API.OFF_ACT_GeneralObject_route1,{ attuneportalid },50,WPOINT.new(3298,10154,0),5)
-                            writerunningandwaitstopandanimation()
-                            API.RandomSleep2(1500, 1000, 1000)
-                            if(API.Compare2874Status(18,false) == true) then
+                            if(kkokiazaidejoyaazzz <= 10140) then
+                                local randomcoordinatetile = API.Math_RandomNumber(7)
+                                if(randomcoordinatetile == 1) then
+                                    API.DoAction_Tile(WPOINT.new(3292,10143,0 ))
+                                elseif(randomcoordinatetile == 2) then
+                                    API.DoAction_Tile(WPOINT.new(3292,10144,0 ))
+                                elseif(randomcoordinatetile == 3) then
+                                    API.DoAction_Tile(WPOINT.new(3293,10145,0 ))
+                                elseif(randomcoordinatetile == 4) then
+                                    API.DoAction_Tile(WPOINT.new(3294,10144,0 ))
+                                elseif(randomcoordinatetile == 5) then
+                                    API.DoAction_Tile(WPOINT.new(3294,10143,0 ))
+                                elseif(randomcoordinatetile == 6) then
+                                    API.DoAction_Tile(WPOINT.new(3295,10144,0 ))
+                                elseif(randomcoordinatetile == 7) then
+                                    API.DoAction_Tile(WPOINT.new(3295,10145,0 ))
+                                else
+                                    API.DoAction_Tile(WPOINT.new(3292,10143,0 ))
+                                end
+                                API.RandomSleep2(2500, 2500, 5000)
+                            end
+
+                            if(canenterportal == true) then
                             
-                                API.DoAction_Interface(0xffffffff,0xffffffff,0,645,9,36,API.OFF_ACT_GeneralInterface_Choose_option)
+                                API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127138 },50,WPOINT.new(3298,10154,0),5)
+                                writerunningandwaitstopandanimation()
+                                API.RandomSleep2(2000, 1000, 1000)
+                            elseif(needreaatuneportal == true) then
+                                API.DoAction_Object_r(0x29,API.OFF_ACT_GeneralObject_route1,{ attuneportalid },50,WPOINT.new(3298,10154,0),5)
+                                writerunningandwaitstopandanimation()
                                 API.RandomSleep2(1500, 1000, 1000)
+                                if(API.Compare2874Status(18,false) == true) then
+                                
+                                    API.DoAction_Interface(0xffffffff,0xffffffff,0,645,9,36,API.OFF_ACT_GeneralInterface_Choose_option)
+                                    API.RandomSleep2(1500, 1000, 1000)
+                                end
                             end
                         end
                     end
@@ -428,6 +431,7 @@ do------------------------------------------------------------------------------
                 if(isanyhermofound == true) then
 
                     hermodverylongtimeee = API.SystemTime() + (60000*3)
+                    hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
                     hermodwass2 = true
                     hermodwass = true
                     hermoddiseappraerrr = API.SystemTime() + 1500
@@ -460,7 +464,17 @@ do------------------------------------------------------------------------------
                     end
                 else
 
-                    
+                    if(API.SystemTime() > hermodverylongtimeees) then
+                   
+                        local yourpointaazzvv = API.PlayerCoord()
+                        local kkokiazaidejoxaazzvv = yourpointaazzvv.x
+                        local kkokiazaidejoyaazzvv = yourpointaazzvv.y
+                        if IsCoordinateValidForArena(kkokiazaidejoxaazzvv, kkokiazaidejoyaazzvv) == true then
+                            randomwwaitforteleportoutoldinstance = math.random(90000,120000)
+                            whenneedgotobank = true
+                        end
+                    end
+
                     if(nearentrancetohermod == true) then
                         firsttimeteleporttobank = false
                         isPrestwasloaded = false
