@@ -321,6 +321,7 @@ do------------------------------------------------------------------------------
                 end
             else
                 if(therewasfoodnowno == true) then
+                    therewasfoodnowno = false
                     whenneedgotobank = true
                 end
             end
@@ -463,6 +464,7 @@ do------------------------------------------------------------------------------
                     if(nearentrancetohermod == true) then
                         firsttimeteleporttobank = false
                         isPrestwasloaded = false
+                        whenneedgotobank = false
                         API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127142 },50,WPOINT.new(861,1745,0),5)
                         writerunningandwaitstopandanimation()
                         API.RandomSleep2(1500, 1000, 1000)
