@@ -268,9 +268,9 @@ do------------------------------------------------------------------------------
                         local kkokiazaidejoxaazz = yourpointaazz.x
                         local kkokiazaidejoyaazz = yourpointaazz.y
                         storearenacoordiantes = {}
-                        local mainpointx = kkokiazaidejoxaazz + 10
+                        local mainpointx = kkokiazaidejoxaazz + 9
                         local mainpointy = kkokiazaidejoyaazz - 5
-                        for xxx = 0, 19 do
+                        for xxx = 0, 17 do
                             for yyy = 0, 22 do
                                 table.insert(storearenacoordiantes, {x = mainpointx - xxx, y = mainpointy + yyy})
                             end
