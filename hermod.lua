@@ -330,7 +330,7 @@ do------------------------------------------------------------------------------
                                     if foundfSSS52 and foundfSSS52.memloc then
                                         if(foundfSSS52.itemid1 == 55191 or foundfSSS52.itemid1 == 55216) then
                                             API.RandomSleep2(1000, 1000, 1000)
-                                            API.DoAction_Interface(0xffffffff,0x55191,1,1622,11,iSSS52-1,API.OFF_ACT_GeneralInterface_route)
+                                            API.DoAction_Interface(0xffffffff,foundfSSS52.itemid1,1,1622,11,iSSS52-1,API.OFF_ACT_GeneralInterface_route)
                                             API.RandomSleep2(1000, 1000, 1000)
                                             break
                                         end
