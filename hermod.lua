@@ -23,7 +23,7 @@ local redrinkhealthpotionsss = API.SystemTime()
 local hermoddiseappraerrr = API.SystemTime()
 local hermodverylongtimeee = API.SystemTime()
 local hermodverylongtimeees = API.SystemTime()
-
+local checkplayerinvinerteals = API.SystemTime()
 local whendorunningway = math.random(150, 1650)
 local goonetimee = false
 local hermodwass = false
@@ -31,7 +31,7 @@ local hermodwass2 = false
 local registertilesatcomong = false
 local isPrestwasloaded = false
 local whendrinkprayer = math.random(70,160)
-
+local isalreadyfullafterlastpreset = false
 local wheneatfood = math.random(1500,2500)
 local randomwwaitforteleportoutoldinstance = math.random(90000,120000)
 local checkiventnroyopenedd = 0
@@ -44,6 +44,20 @@ function calculateDistanceBetweenPoints(firstpoint0, secondpoint0, firstpoint1, 
     local saknis2AAB = (secondpoint0 - secondpoint1)^2
     local kokiaksanisAAB = math.sqrt(saknisAAB + saknis2AAB)
     return math.floor(kokiaksanisAAB + 0.5)
+end
+
+function Isiventoryfull()
+    local isinvfull = 0
+    local reiksmeesss = API.Container_Get_all(93)
+    for ibaaa, barbaaa in ipairs(reiksmeesss) do
+        if(barbaaa.item_id ~= -1) then
+            isinvfull = isinvfull + 1
+        end
+    end
+    if(isinvfull == 28) then
+        return true
+    end
+    return false
 end
 
 
@@ -349,6 +363,13 @@ do------------------------------------------------------------------------------
                             API.DoAction_Object_r(0x33,API.OFF_ACT_GeneralObject_route3,{ 114750 },50,WPOINT.new(3299,10132,0),5) -- click load last preset...
                             writerunningandwaitstopandanimation()
                             API.RandomSleep2(1000, 1000, 1000)
+
+                            if(Isiventoryfull() == true) then
+                                isalreadyfullafterlastpreset = true
+                            else
+                                isalreadyfullafterlastpreset = false
+                            end
+
                             isPrestwasloaded = true
                         else
 
@@ -464,6 +485,18 @@ do------------------------------------------------------------------------------
                     end
                 else
 
+                    if(API.SystemTime() > checkplayerinvinerteals) then
+                        if(isalreadyfullafterlastpreset == false) then
+                            if(Isiventoryfull() == true) then
+                                checkplayerinvinerteals = API.SystemTime() + (500 + API.Math_RandomNumber(1000))
+                                whenneedgotobank = true
+                            end
+                        else
+                            if(Isiventoryfull() == false) then
+                                isalreadyfullafterlastpreset = false
+                            end
+                        end
+                    end
                     if(API.SystemTime() > hermodverylongtimeees) then
                    
                         local yourpointaazzvv = API.PlayerCoord()
