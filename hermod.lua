@@ -155,10 +155,10 @@ function isthereattackhermod()
 end
 local storearenacoordiantes = {}
 
-function IsCoordinateValidForArena(whatcoordx,whatcoordy)
+function IsCoordinateValidForArena(whatcoordx,whatcoordy,offset)
     if(#storearenacoordiantes > 0) then
         for _, arenainfo in ipairs(storearenacoordiantes) do
-            if arenainfo.x == whatcoordx and arenainfo.y == whatcoordy then
+            if(math.abs(renainfo.x - whatcoordx) <= offset and math.abs(renainfo.y - whatcoordy) <= offset)
                 return true
             end
         end
@@ -199,7 +199,7 @@ function getRandomCoordinate(x, y)
             -- Move down-right
             newX, newY = x + 2, y - 2
         end
-        if IsCoordinateValidForArena(newX, newY) == true then
+        if IsCoordinateValidForArena(newX, newY,0) == true then
             valid = true
         else
             table.remove(directions, index)
@@ -545,7 +545,7 @@ do------------------------------------------------------------------------------
                             local yourpointaazzvv = API.PlayerCoord()
                             local kkokiazaidejoxaazzvv = yourpointaazzvv.x
                             local kkokiazaidejoyaazzvv = yourpointaazzvv.y
-                            if IsCoordinateValidForArena(kkokiazaidejoxaazzvv, kkokiazaidejoyaazzvv) == true then
+                            if IsCoordinateValidForArena(kkokiazaidejoxaazzvv, kkokiazaidejoyaazzvv,5) == true then
                                 hermodverylongtimeee = API.SystemTime() + (60000*4)
                                 randomwwaitforteleportoutoldinstance = math.random(90000,120000)
                                 whenneedgotobank = true
