@@ -24,8 +24,6 @@ local hermoddiseappraerrr = API.SystemTime()
 local hermodverylongtimeee = API.SystemTime()
 local hermodverylongtimeees = API.SystemTime()
 local checkplayerinvinerteals = API.SystemTime()
-
-
 local waitforpalyerinzone = 0
 
 local whendorunningway = math.random(150, 1650)
@@ -82,6 +80,7 @@ function isthereattackhermod()
     local canenterattuneportal = false
     local needarreattuneportal = false
     local playeratinstancee = false
+    local canarealootbetoogled = false
     for _, obj in ipairs(objs) do
         if obj.Type == 4 then
             if obj.Id == 7836 then
@@ -109,6 +108,11 @@ function isthereattackhermod()
                 end
             end
         elseif obj.Type == 3 then
+            local retrivecoordidenates = Find_ObjectinCoord(obj.TileX,obj.TileY)
+            if(math.abs(kkokiazaidejoxaa - retrivecoordidenates.x) <=3 and math.abs(kkokiazaidejoyaa - retrivecoordidenates.y) <=3) then
+                canarealootbetoogled = true
+            end
+
             if obj.Id == 55191 or obj.Id == 55216 then -- armoured zombie
                 ishermoddplatee = true
             end
@@ -148,10 +152,10 @@ function isthereattackhermod()
             end
         end
     end
-    if(foundhitspot == true or foundanyzombie == true or foundanyhermod == true or playercomeatentranceregistertiles == true or entergatewayy == true or canenterattuneportal == true or needarreattuneportal == true or playeratinstancee == true) then
-        return foundhitspot, foundanyzombie, foundanyhermod, ishermoddplatee,playercomeatentranceregistertiles,entergatewayy,canenterattuneportal,needarreattuneportal,saveattuneiddd, playeratinstancee, retrievecoordinateesx, retrievecoordinateesy
+    if(foundhitspot == true or foundanyzombie == true or foundanyhermod == true or playercomeatentranceregistertiles == true or entergatewayy == true or canenterattuneportal == true or needarreattuneportal == true or playeratinstancee == true or canarealootbetoogled == true) then
+        return foundhitspot, foundanyzombie, foundanyhermod, ishermoddplatee,playercomeatentranceregistertiles,entergatewayy,canenterattuneportal,needarreattuneportal,saveattuneiddd, playeratinstancee,canarealootbetoogled, retrievecoordinateesx, retrievecoordinateesy
     end
-    return false,false,false,false,false,false,false,false,-1,false,-1,-1
+    return false,false,false,false,false,false,false,false,-1,false,false,-1,-1
 end
 local storearenacoordiantes = {}
 
@@ -293,12 +297,80 @@ local function idleCheck()
         API.RandomSleep2(300, 800, 1200)
     end
 end
+-- Define a table to map characters to their virtual key codes
+local virtualKeyCodes = {
+    a = 0x41, b = 0x42, c = 0x43, d = 0x44, e = 0x45, f = 0x46, g = 0x47,
+    h = 0x48, i = 0x49, j = 0x4A, k = 0x4B, l = 0x4C, m = 0x4D, n = 0x4E,
+    o = 0x4F, p = 0x50, q = 0x51, r = 0x52, s = 0x53, t = 0x54, u = 0x55,
+    v = 0x56, w = 0x57, x = 0x58, y = 0x59, z = 0x5A,
+    ['0'] = 0x30, ['1'] = 0x31, ['2'] = 0x32, ['3'] = 0x33, ['4'] = 0x34,
+    ['5'] = 0x35, ['6'] = 0x36, ['7'] = 0x37, ['8'] = 0x38, ['9'] = 0x39,
+    [';'] = 0xBA, ['='] = 0xBB, [','] = 0xBC, ['-'] = 0xBD, ['.'] = 0xBE,
+    ['/'] = 0xBF, ['`'] = 0xC0, ['['] = 0xDB, ['\\'] = 0xDC, [']'] = 0xDD,
+    ["'"] = 0xDE
+}
+
+-- Function to get the virtual key code for a given character
+local function getVirtualKeyCode(char)
+    -- Convert the character to lowercase to handle uppercase letters
+    char = string.lower(char)
+    
+    -- Retrieve the virtual key code from the table
+    local keyCode = virtualKeyCodes[char]
+    
+    -- Return the key code as a hexadecimal string, or nil if the character is not found
+    if keyCode then
+        return string.format("0x%X", keyCode)
+    else
+        return nil
+    end
+end
+
+-- Define the base numbers and the increment
+local increment = 16777216
+local baseNumbers = {
+    [553648127] = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'},
+    [822083583] = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'},
+    [1090519039] = {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
+    [1258291199] = {'\\'}
+}
+
+-- Function to get the character for a given number
+local function getCharFromNumber(num)
+    for baseNumber, chars in pairs(baseNumbers) do
+        -- Calculate the difference from the base number
+        local diff = num - baseNumber
+        
+        -- Check if the difference is a multiple of the increment
+        if diff % increment == 0 then
+            -- Calculate the index based on the difference
+            local index = diff // increment
+            
+            -- Retrieve the character from the table
+            local char = chars[index + 1] -- Lua tables are 1-indexed
+            
+            -- Return the character, or nil if the index is not valid
+            return char
+        end
+    end
+    
+    -- Return nil if the number does not match any base number
+    return nil
+end
+
+
+
+
 local firsttimeteleporttobank = true
 API.Write_LoopyLoop(true)
 while(API.Read_LoopyLoop())
 do-----------------------------------------------------------------------------------
     if(API.GetGameState2() == 3) then
-        local retrieveinforeturn,isanyzombiefound,isanyhermofound,ishermodplatee,iscomejsutantrance,nearentrancetohermod,canenterportal,needreaatuneportal,attuneportalid,playerathermod, xkoordinate,ykoordinate = isthereattackhermod()
+
+
+       
+
+        local retrieveinforeturn,isanyzombiefound,isanyhermofound,ishermodplatee,iscomejsutantrance,nearentrancetohermod,canenterportal,needreaatuneportal,attuneportalid,playerathermod,innearlootbeam, xkoordinate,ykoordinate = isthereattackhermod()
         if(retrieveinforeturn == true) then
 
             hermodverylongtimeee = API.SystemTime() + (60000*3)
@@ -341,6 +413,7 @@ do------------------------------------------------------------------------------
             else
                 if(therewasfoodnowno == true) then
                     therewasfoodnowno = false
+                    isPrestwasloaded = false
                     whenneedgotobank = true
                     print('Not food left teleport out to bank!')
                 end
@@ -499,10 +572,12 @@ do------------------------------------------------------------------------------
                         hermodwass2 = true
                         hermodwass = true
                         hermoddiseappraerrr = API.SystemTime() + 1500
+                        local justdrinkpedpotion = false
                         if(API.Local_PlayerInterActingWith_Id() ~= 30163) then -- hermod     
                             if(API.SystemTime() > waitforindextorwriteea and API.SystemTime() > waitforindextorwriteeaaa and API.SystemTime() > waitforindextorwriteeaa) then
                                 waitforindextorwriteea = API.SystemTime() + (1000 + API.Math_RandomNumber(1000))
                                 if(math.random(1,16) <=9) then
+                                    justdrinkpedpotion = true
                                     API.DoAction_NPC(0x42,API.OFF_ACT_AttackNPC_route,{ 30163 },50)
                                 end
                             end
@@ -511,6 +586,9 @@ do------------------------------------------------------------------------------
                         end
                         if(os.time() > redrinkoverloadpotions) then
                             API.RandomSleep2(200, 500, 1000)
+                            if(justdrinkpedpotion == true) then
+                                API.RandomSleep2(100, 500, 1000)
+                            end
                             local item_ids_to_check = {49039,49037,49035,49033,49031,49029} -- Example item IDs to check
                             local a,b,c,ditemid = Isinventorycontainingitem(item_ids_to_check)
                             if(a == true) then
@@ -531,6 +609,7 @@ do------------------------------------------------------------------------------
                         if(API.SystemTime() > checkplayerinvinerteals) then
                             if(isalreadyfullafterlastpreset == false) then
                                 if(Isiventoryfull() == true) then
+                                    isPrestwasloaded = false
                                     checkplayerinvinerteals = API.SystemTime() + (500 + API.Math_RandomNumber(1000))
                                     whenneedgotobank = true
                                 end
@@ -595,6 +674,23 @@ do------------------------------------------------------------------------------
                                             end
                                         end
                                     end
+                                end
+                            end
+                        else
+                            if(innearlootbeam == true) then
+                                local getkeybindfromsettings = API.VB_FindPSettinOrder(6620, 1).state
+                            
+                                local retrieveletter = getCharFromNumber(getkeybindfromsettings)
+                                if(retrieveletter) then
+                                    API.RandomSleep2(1000, 1000, 1000)
+                                    print('Pressing keyboard key open area loot interface.')
+                                  
+                                    local coodee = tonumber(getVirtualKeyCode(retrieveletter))
+                                    API.KeyboardPress2(coodee, 100,300)
+                                    API.RandomSleep2(1000, 1000, 1000)
+                                else
+                                    print('There is no way get this letter from setting please use different one!')
+                                    API.RandomSleep2(1000, 1000, 1000)
                                 end
                             end
                         end
