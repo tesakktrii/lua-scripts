@@ -153,12 +153,12 @@ function isthereattackhermod()
     end
     return false,false,false,false,false,false,false,false,-1,false,-1,-1
 end
-local storearenacoordiantes = {}
+local storeacoordiantes = {}
 
 function IsCoordinateValidForArena(whatcoordx,whatcoordy,offset)
     if(#storearenacoordiantes > 0) then
         for _, arenainfo in ipairs(storearenacoordiantes) do
-            if(math.abs(renainfo.x - whatcoordx) <= offset and math.abs(renainfo.y - whatcoordy) <= offset) then
+            if(math.abs(arenainfo.x - whatcoordx) <= offset and math.abs(arenainfo.y - whatcoordy) <= offset) then
                 return true
             end
         end
