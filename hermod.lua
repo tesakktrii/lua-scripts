@@ -24,6 +24,10 @@ local hermoddiseappraerrr = API.SystemTime()
 local hermodverylongtimeee = API.SystemTime()
 local hermodverylongtimeees = API.SystemTime()
 local checkplayerinvinerteals = API.SystemTime()
+
+
+local waitforpalyerinzone = 0
+
 local whendorunningway = math.random(150, 1650)
 local goonetimee = false
 local hermodwass = false
@@ -75,11 +79,9 @@ function isthereattackhermod()
     local ishermoddplatee = false
     local entergatewayy = false
     local saveattuneiddd = -1
-
     local canenterattuneportal = false
     local needarreattuneportal = false
-
-
+    local playeratinstancee = false
     for _, obj in ipairs(objs) do
         if obj.Type == 4 then
             if obj.Id == 7836 then
@@ -113,45 +115,43 @@ function isthereattackhermod()
         elseif obj.Type == 0 then
             if obj.Id == 127143 then -- gates to exit
                 if(obj.Action == "Exit") then
-                    local retrivecoordinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
-                    if(kkokiazaidejoyaa - retrivecoordinatesa.y == 7) then
-                        playercomeatentranceregistertiles = true
+                    if(obj.Name == "Chamber doorway") then
+                        local retrivecoordinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
+                        if(kkokiazaidejoyaa - retrivecoordinatesa.y == 7) then
+                            playercomeatentranceregistertiles = true
+                        end
+                        playeratinstancee = true
                     end
                 end
             end
-
-
             local retrivecoorsdinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
-
             if(retrivecoorsdinatesa.x == 3298 and retrivecoorsdinatesa.y == 10154) then
                 if(obj.Action == "Enter") then
-
                     local match = obj.Name:match("Rasial's Citadel")
-
                     if(match) then
                         canenterattuneportal = true
                     else
                         saveattuneiddd = obj.Id
                         needarreattuneportal = true
                     end
-                    
                 end
             end
-
         elseif obj.Type == 12 then
             if obj.Id == 127142 then -- gates to exit
-                if(obj.Action == "Enter") then
-                  
-                    entergatewayy = true
-                
+                if(kkokiazaidejoxaa >= 840 and kkokiazaidejoxaa <= 890 and kkokiazaidejoyaa >=1720 and kkokiazaidejoyaa <= 1744) then
+                    if(obj.Action == "Enter") then
+                        if(obj.Name == "Chamber doorway") then
+                            entergatewayy = true
+                        end
+                    end
                 end
             end
         end
     end
-    if(foundhitspot == true or foundanyzombie == true or foundanyhermod == true or playercomeatentranceregistertiles == true or entergatewayy == true or canenterattuneportal == true or needarreattuneportal == true) then
-        return foundhitspot, foundanyzombie, foundanyhermod, ishermoddplatee,playercomeatentranceregistertiles,entergatewayy,canenterattuneportal,needarreattuneportal,saveattuneiddd, retrievecoordinateesx, retrievecoordinateesy
+    if(foundhitspot == true or foundanyzombie == true or foundanyhermod == true or playercomeatentranceregistertiles == true or entergatewayy == true or canenterattuneportal == true or needarreattuneportal == true or playeratinstancee == true) then
+        return foundhitspot, foundanyzombie, foundanyhermod, ishermoddplatee,playercomeatentranceregistertiles,entergatewayy,canenterattuneportal,needarreattuneportal,saveattuneiddd, playeratinstancee, retrievecoordinateesx, retrievecoordinateesy
     end
-    return false, false,false,false,false,-1, -1
+    return false,false,false,false,false,false,false,false,-1,false,-1,-1
 end
 local storearenacoordiantes = {}
 
@@ -298,8 +298,12 @@ API.Write_LoopyLoop(true)
 while(API.Read_LoopyLoop())
 do-----------------------------------------------------------------------------------
     if(API.GetGameState2() == 3) then
-        local retrieveinforeturn,isanyzombiefound,isanyhermofound,ishermodplatee,iscomejsutantrance,nearentrancetohermod,canenterportal,needreaatuneportal,attuneportalid, xkoordinate,ykoordinate = isthereattackhermod()
+        local retrieveinforeturn,isanyzombiefound,isanyhermofound,ishermodplatee,iscomejsutantrance,nearentrancetohermod,canenterportal,needreaatuneportal,attuneportalid,playerathermod, xkoordinate,ykoordinate = isthereattackhermod()
         if(retrieveinforeturn == true) then
+
+            hermodverylongtimeee = API.SystemTime() + (60000*3)
+            hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
+
             taketimeeex = API.SystemTime() + 1500
             if(taketimeee == 0) then
                 taketimeee = API.SystemTime()
@@ -338,6 +342,7 @@ do------------------------------------------------------------------------------
                 if(therewasfoodnowno == true) then
                     therewasfoodnowno = false
                     whenneedgotobank = true
+                    print('Not food left teleport out to bank!')
                 end
             end
 
@@ -355,14 +360,18 @@ do------------------------------------------------------------------------------
                     if(distancefromkharen > 30) then -- Teleport to war retreat
                         if( API.VB_FindPSettinOrder(3130, -1).state == 1) then
                             API.DoAction_Interface(0xffffffff,0xffffffff,1,1461,1,205,API.OFF_ACT_GeneralInterface_route)
-                            API.RandomSleep2(6000, 1000, 1000)
+                            API.RandomSleep2(5000, 2000, 3000)
+                        else
+                            print('Magic book not opened impossible war reteat!')
                         end
                     else
-                        API.RandomSleep2(1000, 2000, 3000)
+                        
                         if(isPrestwasloaded == false) then
+                            print('Clicking to load last preset...')
+                            API.RandomSleep2(1000, 2000, 3000)
                             API.DoAction_Object_r(0x33,API.OFF_ACT_GeneralObject_route3,{ 114750 },50,WPOINT.new(3299,10132,0),5) -- click load last preset...
                             writerunningandwaitstopandanimation()
-                            API.RandomSleep2(1000, 1000, 1000)
+                            API.RandomSleep2(1000, 1350, 1900)
 
                             if(Isiventoryfull() == true) then
                                 isalreadyfullafterlastpreset = true
@@ -396,11 +405,12 @@ do------------------------------------------------------------------------------
                             end
 
                             if(canenterportal == true) then
-                            
+                                print('Clicking on attune portal to teleport to hermod instance...')
                                 API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127138 },50,WPOINT.new(3298,10154,0),5)
                                 writerunningandwaitstopandanimation()
                                 API.RandomSleep2(2000, 1000, 1000)
                             elseif(needreaatuneportal == true) then
+                                print('Clicking on attune portal to reattune portal to teleport to hermod instance...')
                                 API.DoAction_Object_r(0x29,API.OFF_ACT_GeneralObject_route1,{ attuneportalid },50,WPOINT.new(3298,10154,0),5)
                                 writerunningandwaitstopandanimation()
                                 API.RandomSleep2(1500, 1000, 1000)
@@ -418,6 +428,8 @@ do------------------------------------------------------------------------------
 
 
             if(isanyzombiefound == true) then
+                hermodverylongtimeee = API.SystemTime() + (60000*3)
+                hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
                 if(API.Local_PlayerInterActingWith_Id() ~= 30164) then
                     if(API.SystemTime() > waitforindextorwritee and API.SystemTime() > waitforindextorwriteeaa and API.SystemTime() > waitforindextorwriteeaaa) then
                         waitforindextorwritee = API.SystemTime() + (1000 + API.Math_RandomNumber(1000))
@@ -429,6 +441,7 @@ do------------------------------------------------------------------------------
             else
                 if(iscomejsutantrance == true) then
                     if(registertilesatcomong == false) then
+                        
                         local yourpointaazz = API.PlayerCoord()
                         local kkokiazaidejoxaazz = yourpointaazz.x
                         local kkokiazaidejoyaazz = yourpointaazz.y
@@ -440,111 +453,142 @@ do------------------------------------------------------------------------------
                                 table.insert(storearenacoordiantes, {x = mainpointx - xxx, y = mainpointy + yyy})
                             end
                         end
+                        firsttimeteleporttobank = false
+                        isPrestwasloaded = false
+                        whenneedgotobank = false
                         registertilesatcomong = true
+                        print('Player at instance arena succefully registered!')
+                    end
+                end
+
+
+
+                if(playerathermod == true) then
+                    if(registertilesatcomong == false) then
+                        if(waitforpalyerinzone == 0) then
+                            waitforpalyerinzone = API.SystemTime() + 1500
+                        else
+                            if(API.SystemTime() > waitforpalyerinzone) then
+                                print('Please launch script not in encounter!')
+                                API.Write_LoopyLoop(false)
+                            end
+                        end
+                    else
+                        waitforpalyerinzone = 0
+                    end
+                else
+                    if(registertilesatcomong == true) then
+                        registertilesatcomong = false
+                    
                     end
                 end
 
 
                 
 
+                if(waitforpalyerinzone == 0) then
 
+                    if(isanyhermofound == true) then
 
-                if(isanyhermofound == true) then
-
-                    hermodverylongtimeee = API.SystemTime() + (60000*3)
-                    hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
-                    hermodwass2 = true
-                    hermodwass = true
-                    hermoddiseappraerrr = API.SystemTime() + 1500
-                    if(API.Local_PlayerInterActingWith_Id() ~= 30163) then -- hermod     
-                        if(API.SystemTime() > waitforindextorwriteea and API.SystemTime() > waitforindextorwriteeaaa and API.SystemTime() > waitforindextorwriteeaa) then
-                            waitforindextorwriteea = API.SystemTime() + (1000 + API.Math_RandomNumber(1000))
-                            if(math.random(1,16) <=9) then
-                                API.DoAction_NPC(0x42,API.OFF_ACT_AttackNPC_route,{ 30163 },50)
+                        hermodverylongtimeee = API.SystemTime() + (60000*3)
+                        hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
+                        hermodwass2 = true
+                        hermodwass = true
+                        hermoddiseappraerrr = API.SystemTime() + 1500
+                        if(API.Local_PlayerInterActingWith_Id() ~= 30163) then -- hermod     
+                            if(API.SystemTime() > waitforindextorwriteea and API.SystemTime() > waitforindextorwriteeaaa and API.SystemTime() > waitforindextorwriteeaa) then
+                                waitforindextorwriteea = API.SystemTime() + (1000 + API.Math_RandomNumber(1000))
+                                if(math.random(1,16) <=9) then
+                                    API.DoAction_NPC(0x42,API.OFF_ACT_AttackNPC_route,{ 30163 },50)
+                                end
                             end
+                        else
+                            waitforindextorwriteeaaa = API.SystemTime() + (500 + API.Math_RandomNumber(500))
+                        end
+                        if(os.time() > redrinkoverloadpotions) then
+                            API.RandomSleep2(200, 500, 1000)
+                            local item_ids_to_check = {49039,49037,49035,49033,49031,49029} -- Example item IDs to check
+                            local a,b,c,ditemid = Isinventorycontainingitem(item_ids_to_check)
+                            if(a == true) then
+                    
+                                API.DoAction_Interface(0x48,ditemid,1,1473,5,c,API.OFF_ACT_GeneralInterface_route)
+                            end
+                            if(math.random(1,10) <=5) then
+                                redrinkoverloadpotions = os.time() + 60*6
+                                redrinkoverloadpotions = redrinkoverloadpotions + math.random(1,15)
+                            else
+                                redrinkoverloadpotions = os.time() + 60*5
+                                redrinkoverloadpotions = redrinkoverloadpotions + math.random(40,55)
+                            end
+                            API.RandomSleep2(200, 500, 1000)
                         end
                     else
-                        waitforindextorwriteeaaa = API.SystemTime() + (500 + API.Math_RandomNumber(500))
-                    end
-                    if(os.time() > redrinkoverloadpotions) then
-                        API.RandomSleep2(200, 500, 1000)
-                        local item_ids_to_check = {49039,49037,49035,49033,49031,49029} -- Example item IDs to check
-                        local a,b,c,ditemid = Isinventorycontainingitem(item_ids_to_check)
-                        if(a == true) then
-                  
-                            API.DoAction_Interface(0x48,ditemid,1,1473,5,c,API.OFF_ACT_GeneralInterface_route)
-                        end
-                        if(math.random(1,10) <=5) then
-                            redrinkoverloadpotions = os.time() + 60*6
-                            redrinkoverloadpotions = redrinkoverloadpotions + math.random(1,15)
-                        else
-                            redrinkoverloadpotions = os.time() + 60*5
-                            redrinkoverloadpotions = redrinkoverloadpotions + math.random(40,55)
-                        end
-                        API.RandomSleep2(200, 500, 1000)
-                    end
-                else
 
-                    if(API.SystemTime() > checkplayerinvinerteals) then
-                        if(isalreadyfullafterlastpreset == false) then
-                            if(Isiventoryfull() == true) then
-                                checkplayerinvinerteals = API.SystemTime() + (500 + API.Math_RandomNumber(1000))
-                                whenneedgotobank = true
-                            end
-                        else
-                            if(Isiventoryfull() == false) then
-                                isalreadyfullafterlastpreset = false
+                        if(API.SystemTime() > checkplayerinvinerteals) then
+                            if(isalreadyfullafterlastpreset == false) then
+                                if(Isiventoryfull() == true) then
+                                    checkplayerinvinerteals = API.SystemTime() + (500 + API.Math_RandomNumber(1000))
+                                    whenneedgotobank = true
+                                end
+                            else
+                                if(Isiventoryfull() == false) then
+                                    isalreadyfullafterlastpreset = false
+                                end
                             end
                         end
-                    end
-                    if(API.SystemTime() > hermodverylongtimeees) then
-                   
-                        local yourpointaazzvv = API.PlayerCoord()
-                        local kkokiazaidejoxaazzvv = yourpointaazzvv.x
-                        local kkokiazaidejoyaazzvv = yourpointaazzvv.y
-                        if IsCoordinateValidForArena(kkokiazaidejoxaazzvv, kkokiazaidejoyaazzvv) == true then
-                            randomwwaitforteleportoutoldinstance = math.random(90000,120000)
-                            whenneedgotobank = true
-                        end
-                    end
-
-                    if(nearentrancetohermod == true) then
-                        firsttimeteleporttobank = false
-                        isPrestwasloaded = false
-                        whenneedgotobank = false
-                        API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127142 },50,WPOINT.new(861,1745,0),5)
-                        writerunningandwaitstopandanimation()
-                        API.RandomSleep2(1500, 1000, 1000)
-                        if(API.Compare2874Status(18,false) == true) then
-                            API.DoAction_Interface(0x36,0xffffffff,1,1591,60,-1,API.OFF_ACT_GeneralInterface_route)
-                            API.RandomSleep2(2000, 1000, 1000)
-                        end
-                    end
+                        if(API.SystemTime() > hermodverylongtimeees) then
                     
+                            local yourpointaazzvv = API.PlayerCoord()
+                            local kkokiazaidejoxaazzvv = yourpointaazzvv.x
+                            local kkokiazaidejoyaazzvv = yourpointaazzvv.y
+                            if IsCoordinateValidForArena(kkokiazaidejoxaazzvv, kkokiazaidejoyaazzvv) == true then
+                                hermodverylongtimeee = API.SystemTime() + (60000*4)
+                                randomwwaitforteleportoutoldinstance = math.random(90000,120000)
+                                whenneedgotobank = true
+                                print('Hermod long time not spawing teleport out rebank reenter instance...')
+                            end
+                        end
 
-                
-                    if(hermodwass2 == true) then
-                        if(API.SystemTime() > hermodverylongtimeee) then
-                            API.Write_LoopyLoop(false)
+                        if(nearentrancetohermod == true) then
+                            firsttimeteleporttobank = false
+                            isPrestwasloaded = false
+                            whenneedgotobank = false
+                            print('Click on Chamber doorway enter Hermod instance...')
+                            API.DoAction_Object_r(0x39,API.OFF_ACT_GeneralObject_route0,{ 127142 },50,WPOINT.new(861,1745,0),5)
+                            writerunningandwaitstopandanimation()
+                            API.RandomSleep2(1500, 1000, 1000)
+                            if(API.Compare2874Status(18,false) == true) then
+                                API.DoAction_Interface(0x36,0xffffffff,1,1591,60,-1,API.OFF_ACT_GeneralInterface_route)
+                                API.RandomSleep2(2000, 1000, 1000)
+                            end
                         end
-                    end
-                    if(hermodwass == true) then
-                        if(API.SystemTime() > hermoddiseappraerrr) then
-                            hermodwass = false
-                            registertilesatcomong = false
+                        
+
+                    
+                        if(hermodwass2 == true) then
+                            if(API.SystemTime() > hermodverylongtimeee) then
+                                print('Not finding hermod long time stopping script...')
+                                API.Write_LoopyLoop(false)
+                            end
                         end
-                    end
-                    if(API.LootWindowOpen_2() == true) then
-                        local kinterfaceabbs = API.LootWindow_GetData()
-                        if(#kinterfaceabbs > 0) then
-                            if kinterfaceabbs then
-                                for iSSS52, foundfSSS52 in pairs(kinterfaceabbs) do
-                                    if foundfSSS52 and foundfSSS52.memloc then
-                                        if(foundfSSS52.itemid1 == 55191 or foundfSSS52.itemid1 == 55216) then
-                                            API.RandomSleep2(1000, 1000, 1000)
-                                            API.DoAction_Interface(0xffffffff,foundfSSS52.itemid1,1,1622,11,iSSS52-1,API.OFF_ACT_GeneralInterface_route)
-                                            API.RandomSleep2(1000, 1000, 1000)
-                                            break
+                        if(hermodwass == true) then
+                            if(API.SystemTime() > hermoddiseappraerrr) then
+                                hermodwass = false
+                                
+                            end
+                        end
+                        if(API.LootWindowOpen_2() == true) then
+                            local kinterfaceabbs = API.LootWindow_GetData()
+                            if(#kinterfaceabbs > 0) then
+                                if kinterfaceabbs then
+                                    for iSSS52, foundfSSS52 in pairs(kinterfaceabbs) do
+                                        if foundfSSS52 and foundfSSS52.memloc then
+                                            if(foundfSSS52.itemid1 == 55191 or foundfSSS52.itemid1 == 55216) then
+                                                API.RandomSleep2(1000, 1000, 1000)
+                                                API.DoAction_Interface(0xffffffff,foundfSSS52.itemid1,1,1622,11,iSSS52-1,API.OFF_ACT_GeneralInterface_route)
+                                                API.RandomSleep2(1000, 1000, 1000)
+                                                break
+                                            end
                                         end
                                     end
                                 end
