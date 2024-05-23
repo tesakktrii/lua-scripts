@@ -457,6 +457,10 @@ do------------------------------------------------------------------------------
                         isPrestwasloaded = false
                         whenneedgotobank = false
                         registertilesatcomong = true
+
+                        hermodverylongtimeee = API.SystemTime() + (60000*4)
+                        hermodverylongtimeees = API.SystemTime() + randomwwaitforteleportoutoldinstance
+
                         print('Player at instance arena succefully registered!')
                     end
                 end
