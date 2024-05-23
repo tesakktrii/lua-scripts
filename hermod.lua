@@ -115,13 +115,13 @@ function isthereattackhermod()
         elseif obj.Type == 0 then
             if obj.Id == 127143 then -- gates to exit
                 if(obj.Action == "Exit") then
-                    if(obj.Name == "Chamber doorway") then
-                        local retrivecoordinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
-                        if(kkokiazaidejoyaa - retrivecoordinatesa.y == 7) then
-                            playercomeatentranceregistertiles = true
-                        end
-                        playeratinstancee = true
+                    
+                    local retrivecoordinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
+                    if(kkokiazaidejoyaa - retrivecoordinatesa.y == 7) then
+                        playercomeatentranceregistertiles = true
                     end
+                    playeratinstancee = true
+                    
                 end
             end
             local retrivecoorsdinatesa = Find_ObjectinCoord(obj.TileX,obj.TileY)
@@ -140,9 +140,9 @@ function isthereattackhermod()
             if obj.Id == 127142 then -- gates to exit
                 if(kkokiazaidejoxaa >= 840 and kkokiazaidejoxaa <= 890 and kkokiazaidejoyaa >=1720 and kkokiazaidejoyaa <= 1744) then
                     if(obj.Action == "Enter") then
-                        if(obj.Name == "Chamber doorway") then
-                            entergatewayy = true
-                        end
+                     
+                        entergatewayy = true
+                    
                     end
                 end
             end
@@ -153,7 +153,7 @@ function isthereattackhermod()
     end
     return false,false,false,false,false,false,false,false,-1,false,-1,-1
 end
-local storeacoordiantes = {}
+local storearenacoordiantes = {}
 
 function IsCoordinateValidForArena(whatcoordx,whatcoordy,offset)
     if(#storearenacoordiantes > 0) then
