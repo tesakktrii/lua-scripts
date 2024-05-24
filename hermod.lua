@@ -26,7 +26,7 @@ local hermodverylongtimeees = API.SystemTime()
 local checkplayerinvinerteals = API.SystemTime()
 local waitforpalyerinzone = 0
 
-local whendorunningway = math.random(150, 1650)
+local whendorunningway = math.random(50, 1250)
 local goonetimee = false
 local hermodwass = false
 local hermodwass2 = false
@@ -180,28 +180,28 @@ function getRandomCoordinate(x, y)
         
         if direction == 1 then
             -- Move up
-            newX, newY = x, y + 2
+            newX, newY = x, y + 3
         elseif direction == 2 then
             -- Move down
-            newX, newY = x, y - 2
+            newX, newY = x, y - 3
         elseif direction == 3 then
             -- Move left
-            newX, newY = x - 2, y
+            newX, newY = x - 3, y
         elseif direction == 4 then
             -- Move right
-            newX, newY = x + 2, y
+            newX, newY = x + 3, y
         elseif direction == 5 then
             -- Move up-left
-            newX, newY = x - 2, y + 2
+            newX, newY = x - 3, y + 3
         elseif direction == 6 then
             -- Move up-right
-            newX, newY = x + 2, y + 2
+            newX, newY = x + 3, y + 3
         elseif direction == 7 then
             -- Move down-left
-            newX, newY = x - 2, y - 2
+            newX, newY = x - 3, y - 3
         elseif direction == 8 then
             -- Move down-right
-            newX, newY = x + 2, y - 2
+            newX, newY = x + 3, y - 3
         end
         if IsCoordinateValidForArena(newX, newY,0) == true then
             valid = true
@@ -329,20 +329,30 @@ end
 -- Define the base numbers and the increment
 local increment = 16777216
 local baseNumbers = {
-    [553648127] = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'},
-    [822083583] = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'},
-    [1090519039] = {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'},
-    [1258291199] = {'\\'}
+    {base = 553648127, chars = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'}},
+    {base = 822083583, chars = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'}},
+    {base = 1090519039, chars = {'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'}},
+    {base = 1258291199, chars = {'\\'}}
 }
+
+-- Calculate the range_end for each base number dynamically
+for _, entry in ipairs(baseNumbers) do
+    local num_chars = #entry.chars
+    entry.range_end = entry.base + (num_chars * increment)
+end
 
 -- Function to get the character for a given number
 local function getCharFromNumber(num)
-    for baseNumber, chars in pairs(baseNumbers) do
-        -- Calculate the difference from the base number
-        local diff = num - baseNumber
+    for _, entry in ipairs(baseNumbers) do
+        local baseNumber = entry.base
+        local chars = entry.chars
+        local range_end = entry.range_end
         
-        -- Check if the difference is a multiple of the increment
-        if diff % increment == 0 then
+        -- Check if the number is within the range for this base number
+        if num >= baseNumber and num < range_end then
+            -- Calculate the difference from the base number
+            local diff = num - baseNumber
+            
             -- Calculate the index based on the difference
             local index = diff // increment
             
@@ -354,7 +364,7 @@ local function getCharFromNumber(num)
         end
     end
     
-    -- Return nil if the number does not match any base number
+    -- Return nil if the number does not match any range
     return nil
 end
 
@@ -387,7 +397,7 @@ do------------------------------------------------------------------------------
                         local playerX, playerY = xkoordinate, ykoordinate
                         local newX, newY = getRandomCoordinate(playerX, playerY)
                         if(newX ~= nil) then
-                            whendorunningway = math.random(150, 1650)
+                            whendorunningway = math.random(50, 1250)
                             API.DoAction_Tile(WPOINT.new(newX,newY,1 ))
                             writerunningandwaitstopandanimation()
                             API.RandomSleep2(100, 500, 1000)
@@ -679,14 +689,13 @@ do------------------------------------------------------------------------------
                         else
                             if(innearlootbeam == true) then
                                 local getkeybindfromsettings = API.VB_FindPSettinOrder(6620, 1).state
-                            
+                             
                                 local retrieveletter = getCharFromNumber(getkeybindfromsettings)
                                 if(retrieveletter) then
                                     API.RandomSleep2(1000, 1000, 1000)
                                     print('Pressing keyboard key open area loot interface.')
-                                  
                                     local coodee = tonumber(getVirtualKeyCode(retrieveletter))
-                                    API.KeyboardPress2(coodee, 100,300)
+                                    API.KeyboardPress31(coodee, 100,300)
                                     API.RandomSleep2(1000, 1000, 1000)
                                 else
                                     print('There is no way get this letter from setting please use different one!')
